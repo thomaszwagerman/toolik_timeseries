@@ -16,6 +16,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import datetime as dt
+plt.style.use('seaborn-deep')
 inpath = ''
 
 ####################
@@ -41,24 +42,30 @@ endTime=pd.to_datetime(df.index[-1])
 # Take the mean over 30 minutes ie 30T
 df=df.resample('1D').mean()
 
-ax1=df[['hfx','lh','grdflx']].plot()
+ax1=df[['hfx','lh','grdflx']].plot() #plots surface sensible heat, latent heat, ground flux
 ax1.set_xlabel("Date")
-ax1.set_ylabel("W/m2")
+ax1.set_ylabel("$W/m^2$")
 ax1.set_title('Toolik Energy Balance')
 plt.savefig('Toolik_1_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
 
-ax2=df[['t','tslb(1)','tsk']].plot()
+ax2=df[['t','tslb(1)','tsk']].plot() #plots 2m temperature, top soil layer temp, skin temperature
 ax2.set_xlabel("Date")
-ax2.set_ylabel("oC")
+ax2.set_ylabel("$^oC$")
 ax2.set_title('Toolik Soil and Air Temperature')
 plt.savefig('Toolik_2_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
 
 
-ax3=df[['rainc','clw']].plot()
+ax3=df[['rainc','clw']].plot() #plots rainfall from cumulus, total column integrated water vapor and cloud var.
 ax3.set_xlabel("Date")
 ax3.set_ylabel("mm")
 ax3.set_title('Toolik Rain and Cloud Water Content')
 plt.savefig('Toolik_3_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
+
+ax4 = df[[]].plot()
+ax4.set_xlabel()
+ax4.set_ylabel()
+ax4.set_title()
+plt.savefig('Toolik_4_21_Apr_15', dpi=300,bbox_inches='tight', pad_inches=0.5)
 
 
 ########## Contents of TS file ########################
