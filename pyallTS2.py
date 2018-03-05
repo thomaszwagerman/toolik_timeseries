@@ -5,7 +5,7 @@
 #
 # Version 0.1
 # Date 27 Nov 2017
-# Author: jbm
+# Author: jbm, edited by tz
 # Latest: 10:54 28/11/17
 #
 import pandas as pd
@@ -13,6 +13,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import datetime as dt
+plt.style.use('seaborn-deep')
+
 #inpath = '/scratch/local/output/toolik/default/'
 #inpath2 = '/scratch/local/output/toolik/green/'
 
@@ -66,15 +68,42 @@ df2=df2.resample('1H').mean()
 
 # Plot differences in air temperature
 df1['diffd-g'] = (df1['t']-df2['t'])
+#Plot differences in surface sensible heat
+df1['diffd-h'] = (df1['hfx']-df2['hfx'])
+#Plot differences in surface latent heat flux
+df1['diffd-lh'] = (df1['lh']-df2['lh'])
+#Plot differences in soil heat flux
+df1['diffd-sh'] = (df1['grdflx']-df2['grdflx'])
+#Plot differences in soil surface temp
+df1['diffd-st'] = (df1['tslb(1)'])-df2['tslb(1)']
 
-ax=df1[['diffd-g']].plot()
-
+ax1=df1[['diffd-g']].plot()
 #df1[['diffd-n']].plot(ax=ax)
 #df1[['diffd-u']].plot(ax=ax)
 
-ax.set_xlabel("Date")
-ax.set_ylabel("Air temperature difference (oC)")
-plt.savefig('Toolik_1_21_Apr_15_diff.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
+ax1.set_xlabel("Date")
+ax1.set_ylabel("Air temperature difference (oC)")
+plt.savefig('Toolik_diff1_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
+
+ax2=df1[['diffd-h']].plot()
+ax2.set_xlabel("Date")
+ax2.set_ylabel("Surface Sensible Heat (W/M^2)")
+plt.savefig('Toolik_diff2_21_Apr_15_diff.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
+
+ax3=df1[['diffd-lh']].plot()
+ax3.set_xlabel("Date")
+ax3.set_ylabel("Surface Latent Heat Flux (W/M^2)")
+plt.savefig('Toolik_diff3_21_Apr_15_diff.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
+
+ax4=df1[['diffd-sh']].plot()
+ax4.set_xlabel("Date")
+ax4.set_ylabel("Soil Heat Flux")
+plt.savefig('Toolik_diff4_21_Apr_15_diff.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
+
+ax5=df1[['diffd-st']].plot()
+ax5.set_xlabel("Date")
+ax5.set_ylabel("Soil Top Layer Temp")
+plt.savefig('Toolik_diff5_21_Apr_15_diff.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
 
 # ax1=df[['hfx','lh','grdflx']].plot()
 # ax1.set_xlabel("Date")
