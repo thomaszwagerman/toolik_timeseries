@@ -19,8 +19,9 @@ import datetime as dt
 plt.style.use('seaborn-deep')
 inpath = ''
 
+
 ####################
-infilename = inpath+'tool.d03.TS'
+infilename = inpath+'tooldefault.d03.TS'
 df = pd.read_csv(infilename,delim_whitespace=1,skiprows=1, header = None,
                  names = ["id", "ts_hour", "id_tsloc", "ix", "iy", "t", "q",
                           "u", "v", "psfc", "glw", "gsw", "hfx", "lh",
@@ -55,16 +56,16 @@ ax2.set_title('Toolik Soil and Air Temperature')
 plt.savefig('Toolik_2_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
 
 
-ax3=df[['rainc','clw']].plot() #plots rainfall from cumulus, total column integrated water vapor and cloud var.
+ax3=df[['rainc','rainnc','clw']].plot() #plots rainfall from cumulus, total column integrated water vapor and cloud var.
 ax3.set_xlabel("Date")
 ax3.set_ylabel("mm")
 ax3.set_title('Toolik Rain and Cloud Water Content')
 plt.savefig('Toolik_3_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
 
-ax4 = df[[]].plot()
-ax4.set_xlabel()
-ax4.set_ylabel()
-ax4.set_title()
+ax4 = df[['psfc']].plot()
+ax4.set_xlabel("Date")
+ax4.set_ylabel("Pa")
+ax4.set_title("Toolik Surface Pressure")
 plt.savefig('Toolik_4_21_Apr_15', dpi=300,bbox_inches='tight', pad_inches=0.5)
 
 
