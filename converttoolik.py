@@ -18,24 +18,16 @@ import datetime as dt
 inpath = ''
 
 ####################
-infilename = inpath+'1-hour_data.csv'
-df = pd.read_csv(infilename,skiprows=1, sep = ',', header = None, parse_dates = [['date','hour']],
-                 names = ["date", "hour", "air_temp_3m", "lw_dn_avg", "lw_up_avg", "sw_dn_avg", "sw_up_avg"])
+infilename = inpath+'1-hour_converted.csv'
+df = pd.read_csv(infilename,skiprows=1, sep = ',', header = None,
+                 names = ["date_time", "air_temp_3m", "lw_dn_avg", "lw_up_avg", "sw_dn_avg", "sw_up_avg"])
 # Add the decimal hour data to the base datetime
 # Need to get this from the namelist or wrfout files eventually.
+df['date_time'] = pd.to_datetime(dt.datetime(2015,4,21)+pd.to_timedelta(df['date_time'], unit='s'))
 
-#Attempts to convert 'date_time' into yy:mm:dd hh:mm:ss
-#df['date'] = pd.to_datetime(dt.datetime(2015,04,21)+pd.to_timedelta(df['date_hour'], unit='h'))
-#df = pd.to_datetime(df['date'] + df['hour'])
-#df = df.apply(lambda r : pd.datetime.combine(r['date'], r['hour']))
-#df=df.resample('1h').mean()
-
-#Attempts to return as a 60m timestamp
-df = df.set_index(['date_hour'])
+df = df.set_index(['date_time'])
 startTime=pd.to_datetime(df.index[0])   # returns a TimeStamp
 endTime=pd.to_datetime(df.index[-1])
-#Convert to a 60 minute frequency
-#df['date_hour'] = df.asfreq('1h', method = 'pad')
 
 ax1=df[['lw_dn_avg','sw_dn_avg']].plot() #plots shortwave and latent heat,
 ax1.set_xlabel("Date")

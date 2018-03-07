@@ -110,6 +110,7 @@ ax5.set_ylabel("Soil Top Layer Temp ($^oC$)")
 ax5.set_title("Soil Top Layer Temperature difference between default and green")
 plt.savefig('Toolik_diff5_21_Apr_15_diff.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
 
+print df1
 # ax1=df[['hfx','lh','grdflx']].plot()
 # ax1.set_xlabel("Date")
 # ax1.set_ylabel("W/m2")
