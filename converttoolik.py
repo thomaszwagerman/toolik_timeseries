@@ -19,26 +19,40 @@ inpath = ''
 
 ####################
 infilename = inpath+'1-hour_data.csv'
-df = pd.read_csv(infilename,skiprows=1, sep = ',', header = None,
+df = pd.read_csv(infilename,skiprows=1, sep = ',', header = None, parse_dates = [['date','hour']],
                  names = ["date", "hour", "air_temp_3m", "lw_dn_avg", "lw_up_avg", "sw_dn_avg", "sw_up_avg"])
 # Add the decimal hour data to the base datetime
 # Need to get this from the namelist or wrfout files eventually.
 
-df['hour'] = pd.to_datetime(dt.datetime(2015,04,21)+pd.to_timedelta(df['hour'], unit='h'))
+#Attempts to convert 'date_time' into yy:mm:dd hh:mm:ss
+#df['date'] = pd.to_datetime(dt.datetime(2015,04,21)+pd.to_timedelta(df['date_hour'], unit='h'))
+#df = pd.to_datetime(df['date'] + df['hour'])
+#df = df.apply(lambda r : pd.datetime.combine(r['date'], r['hour']))
+#df=df.resample('1h').mean()
 
-df = df.set_index(['date'])
+#Attempts to return as a 60m timestamp
+df = df.set_index(['date_hour'])
 startTime=pd.to_datetime(df.index[0])   # returns a TimeStamp
 endTime=pd.to_datetime(df.index[-1])
+#Convert to a 60 minute frequency
+#df['date_hour'] = df.asfreq('1h', method = 'pad')
 
-ax1=df[['lw_dn_avg','sw_dn_avg']].plot() #plots surface sensible heat, latent heat, ground flux
+ax1=df[['lw_dn_avg','sw_dn_avg']].plot() #plots shortwave and latent heat,
 ax1.set_xlabel("Date")
 ax1.set_ylabel("$W/m^2$")
 ax1.set_title('Toolik Station Energy Balance')
 plt.savefig('Toolik_obs1_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
 
-ax2=df[['air_temp_3m']].plot() #plots surface sensible heat, latent heat, ground flux
+ax2=df[['air_temp_3m']].plot() #plots temperature at 3_m (2_m is not available)
 ax2.set_xlabel("Date")
 ax2.set_ylabel("$^oC$")
 ax2.set_title('Toolik Station temperature')
 plt.savefig('Toolik_obs2_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
+
+ax3=df[['lw_up_avg','sw_up_avg']].plot() #plots shortwave and latent heat,
+ax3.set_xlabel("Date")
+ax3.set_ylabel("$W/m^2$")
+ax3.set_title('Toolik Station Energy Balance')
+plt.savefig('Toolik_obs3_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
+
 print df
