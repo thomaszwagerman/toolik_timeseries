@@ -68,7 +68,7 @@ ax4.set_ylabel("Pa")
 ax4.set_title("Toolik Surface Pressure")
 plt.savefig('Toolik_4_21_Apr_15', dpi=300,bbox_inches='tight', pad_inches=0.5)
 
-
+print df
 ########## Contents of TS file ########################
 #id:          grid ID
 #ts_hour:     forecast time in hours

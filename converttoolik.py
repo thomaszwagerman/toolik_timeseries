@@ -23,11 +23,15 @@ df = pd.read_csv(infilename,skiprows=1, sep = ',', header = None,
                  names = ["date_time", "air_temp_3m", "lw_dn_avg", "lw_up_avg", "sw_dn_avg", "sw_up_avg"])
 # Add the decimal hour data to the base datetime
 # Need to get this from the namelist or wrfout files eventually.
-df['date_time'] = pd.to_datetime(dt.datetime(2015,4,21)+pd.to_timedelta(df['date_time'], unit='s'))
+df = df.set_index(pd.DatetimeIndex(df['date_time']))
+#df['date_time'] = pd.to_datetime(dt.datetime(2015,4,21)+pd.to_timedelta(df['date_time'], unit='h'))
 
-df = df.set_index(['date_time'])
+#df = df.set_index(['date_time'])
 startTime=pd.to_datetime(df.index[0])   # returns a TimeStamp
 endTime=pd.to_datetime(df.index[-1])
+
+# Take the mean over 30 minutes ie 30T
+df=df.resample('1D').mean()
 
 ax1=df[['lw_dn_avg','sw_dn_avg']].plot() #plots shortwave and latent heat,
 ax1.set_xlabel("Date")
