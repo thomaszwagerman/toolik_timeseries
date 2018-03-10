@@ -18,57 +18,90 @@ import matplotlib.pyplot as plt
 import datetime as dt
 plt.style.use('seaborn-deep')
 inpath = ''
+inpath2 = ''
 
 
 ####################
-infilename = inpath+'tooldefault.d03.TS'
-df = pd.read_csv(infilename,delim_whitespace=1,skiprows=1, header = None,
+infilename1 = inpath+'tooldefault.d03.TS'
+df1 = pd.read_csv(infilename1,delim_whitespace=1,skiprows=1, header = None,
                  names = ["id", "ts_hour", "id_tsloc", "ix", "iy", "t", "q",
                           "u", "v", "psfc", "glw", "gsw", "hfx", "lh",
                           "grdflx", "tsk", "tslb(1)", "rainc",
                           "rainnc", "clw"])
+
+infilename2 = inpath2+'1-hour_converted.csv'
+df2 = pd.read_csv(infilename2,skiprows=1, sep = ',', header = None,
+                 names = ["date_time", "air_temp_3m", "lw_dn_avg", "lw_up_avg", "sw_dn_avg", "sw_up_avg"])
+
+#df2 = df2.loc['2015-04-21':'2015-05-19']
+
 # Add the decimal hour data to the base datetime
 # Need to get this from the namelist or wrfout files eventually.
-df['ts_hour'] = pd.to_datetime(dt.datetime(2015,4,21)+pd.to_timedelta(df['ts_hour'], unit='h'))
+df1['ts_hour'] = pd.to_datetime(dt.datetime(2015,4,21)+pd.to_timedelta(df1['ts_hour'], unit='h'))
+df2 = df2.set_index(pd.DatetimeIndex(df2['date_time']))
+#df2['date'] = pd.to_datetime(dt.datetime(2015,4,21)+pd.to_timedelta(df2['date'], unit='h'))
 
 # Convert temperatures to Celcius
-df['t']= df['t']-273.16
-df['tslb(1)']= df['tslb(1)']-273.16
-df['tsk']= df['tsk']-273.16
+df1['t']= df1['t']-273.16
+df1['tslb(1)']= df1['tslb(1)']-273.16
+df1['tsk']= df1['tsk']-273.16
 
-df = df.set_index(['ts_hour'])
-startTime=pd.to_datetime(df.index[0])   # returns a TimeStamp
-endTime=pd.to_datetime(df.index[-1])
+df1 = df1.set_index(['ts_hour'])
+startTime1=pd.to_datetime(df1.index[0])   # returns a TimeStamp
+endTime1=pd.to_datetime(df1.index[-1])
+
+#df2 = df2.set_index(['date_time'])
+startTime2=pd.to_datetime(df2.index[0])   # returns a TimeStamp
+endTime2=pd.to_datetime(df2.index[-1])
 
 # Take the mean over 30 minutes ie 30T
-df=df.resample('1D').mean()
+df1=df1.resample('1D').mean()
+df2=df2.resample('1D').mean()
 
-ax1=df[['hfx','lh','grdflx']].plot() #plots surface sensible heat, latent heat, ground flux
+ax1=df1[['hfx','lh','grdflx']].plot() #plots surface sensible heat, latent heat, ground flux
 ax1.set_xlabel("Date")
 ax1.set_ylabel("$W/m^2$")
 ax1.set_title('Toolik Energy Balance')
 plt.savefig('Toolik_1_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
 
-ax2=df[['t','tslb(1)','tsk']].plot() #plots 2m temperature, top soil layer temp, skin temperature
+ax2=df1[['t','tslb(1)','tsk']].plot() #plots 2m temperature, top soil layer temp, skin temperature
 ax2.set_xlabel("Date")
 ax2.set_ylabel("$^oC$")
 ax2.set_title('Toolik Soil and Air Temperature')
 plt.savefig('Toolik_2_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
 
-
-ax3=df[['rainc','rainnc','clw']].plot() #plots rainfall from cumulus, total column integrated water vapor and cloud var.
+ax3=df1[['rainc','rainnc','clw']].plot() #plots rainfall from cumulus, total column integrated water vapor and cloud var.
 ax3.set_xlabel("Date")
 ax3.set_ylabel("mm")
 ax3.set_title('Toolik Rain and Cloud Water Content')
 plt.savefig('Toolik_3_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
 
-ax4 = df[['psfc']].plot()
+ax4 = df1[['psfc']].plot()
 ax4.set_xlabel("Date")
 ax4.set_ylabel("Pa")
 ax4.set_title("Toolik Surface Pressure")
 plt.savefig('Toolik_4_21_Apr_15', dpi=300,bbox_inches='tight', pad_inches=0.5)
 
-print df
+ax5=df2[['lw_dn_avg','sw_dn_avg']].plot() #plots shortwave and latent heat,
+ax5.set_xlabel("Date")
+ax5.set_ylabel("$W/m^2$")
+ax5.set_title('Toolik Station Energy Balance')
+plt.savefig('Toolik_obs1_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
+
+ax6=df2[['air_temp_3m']].plot() #plots temperature at 3_m (2_m is not available)
+ax6.set_xlabel("Date")
+ax6.set_ylabel("$^oC$")
+ax6.set_xlim([startTime2, endTime2])
+ax6.set_title('Toolik Station temperature')
+plt.savefig('Toolik_obs2_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
+
+ax7=df2[['lw_up_avg','sw_up_avg']].plot() #plots shortwave and latent heat,
+ax7.set_xlabel("Date")
+ax7.set_ylabel("$W/m^2$")
+ax7.set_title('Toolik Station Energy Balance')
+plt.savefig('Toolik_obs3_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
+
+print df2
 ########## Contents of TS file ########################
 #id:          grid ID
 #ts_hour:     forecast time in hours

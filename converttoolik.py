@@ -51,4 +51,7 @@ ax3.set_ylabel("$W/m^2$")
 ax3.set_title('Toolik Station Energy Balance')
 plt.savefig('Toolik_obs3_21_Apr_15.png', dpi=300, bbox_inches='tight', pad_inches=0.5)
 
+
+
+
 print df
