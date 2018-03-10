@@ -58,8 +58,8 @@ endTime1=pd.to_datetime(df1.index[-1])
 df1=df1.resample('1D').mean()
 df2=df2.resample('1D').mean()
 
-#df1.to_csv('default_hour.csv')
-#df2.to_csv('observed_hour.csv')
-frames = [df1, df2]
-results = pd.concat(frames)
-print results
+df1.to_csv('default_hour.csv')
+df2.to_csv('observed_hour.csv')
+#frames = [df1, df2]
+#results = pd.concat(frames)
+#print results
