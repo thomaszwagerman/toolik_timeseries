@@ -87,7 +87,7 @@ df3=df3.resample('1H').mean()
 
 # Plot differences in air temperature
 #Difference Green
-df1['diffd-g-green'] = (df1['t']-df2['t'])
+df1['diffd-g-green'] = (df2['t']-df1['t'])
 #Difference evergreen
 df1['diffd-g-evergreen'] = (df1['t']-df3['t'])
 
