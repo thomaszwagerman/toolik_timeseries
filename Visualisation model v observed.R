@@ -83,8 +83,8 @@ theme_difference <- function(){
 
 #First visualisation - Air Temperature, model vs observation----
 ggplot() +
-  geom_point(data = observed, aes(x = date_time, y = air_temp_3m, colour = "red")) +
-  geom_point(data = modeldefault, aes(x = ts_hour, y = t, colour = "blue")) +
+  geom_line(data = observed, aes(x = date_time, y = air_temp_3m, colour = "red")) +
+  geom_line(data = modeldefault, aes(x = ts_hour, y = t, colour = "blue")) +
   theme_toolik()+
   scale_fill_manual(values = c("#6495ED", "#66CD00"))+ #custom colours
   scale_colour_manual(values=c("#6495ED", "#66CD00"),
@@ -256,8 +256,6 @@ ggplot() +
                                "Difference between Evergreen and Default"))+ #adding legend labels
   ylab("Surface Sensible Heat Flux in W/M")+
   xlab("Date (in 2015)")
-
-
 #Differences from default in surface latent heat flux----
 ggplot() +
   geom_line(data = differences, aes(x = ts_hour, y = diff_gr_lh, colour = "blue")) +

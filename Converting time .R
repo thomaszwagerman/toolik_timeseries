@@ -16,10 +16,14 @@ head(toolik)
 #Making all hours 4 digits
 toolik$hour <-  sprintf('%04d',toolik$hour)
 
+
+class(toolik$hour)
 #Formatting into time
 toolik$hour <- format(strptime(toolik$hour, format = "%H%M"), format = "%H:%M")
 head(toolik)
 
+class(toolik$date)
+head(toolik$date)
 #Making date into a date category
 toolik$date <- as.Date(paste(toolik$date), format = "%Y-%m-%d")
 
