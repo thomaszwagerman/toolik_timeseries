@@ -10,7 +10,7 @@ library(colourpicker)
 getwd()
 setwd("/home/thomasz/Desktop/toolik_timeseries/toolik_timeseries")
 
-toolik <- read.csv('1-hour_data.csv', header = TRUE, skip = 0, sep = ",")
+toolik <- read.csv('3-hour_data.csv', header = TRUE, skip = 0, sep = ",")
 head(toolik)
 
 #Making all hours 4 digits
@@ -36,8 +36,10 @@ toolik$date_time <- as.POSIXct(toolik$date_time, format = "%Y-%m-%d %H:%M:%S")
 head(toolik)
 
 #Making new csv
-toolik_clean <- dplyr::select(toolik, date_time, air_temp_3m, lw_dn_avg, lw_up_avg, sw_dn_avg, sw_up_avg)
+toolik_clean <- dplyr::select(toolik, date_time, soil1_moss, soil1_5cm, soil1_10cm, soil1_20cm, soil1_50cm, soil1_100cm,
+                              soil1_150cm)
 head(toolik_clean)
-write.csv(toolik_clean, file = "1-hour_converted.csv")
+names(toolik_clean)
+write.csv(toolik_clean, file = "3-hour_converted.csv")
 
 

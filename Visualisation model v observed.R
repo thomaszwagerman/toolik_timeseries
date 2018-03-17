@@ -14,6 +14,7 @@ getwd()
 setwd("/home/thomasz/Desktop/toolik_timeseries/toolik_timeseries")
 
 observed <- read.csv('observed_hour.csv', header = TRUE, skip = 0, sep = ",")
+soiltemp <- read.csv('default_3hour.csv', header = TRUE, skip = 0, sep = ",")
 modeldefault <- read.csv('default_hour.csv', header = TRUE, skip = 0, sep = ",")
 green <- read.csv('green_hour.csv', header = TRUE, skip = 0, sep = ",")
 evergreen <- read.csv('evergreen_hour.csv', header = TRUE, skip = 0, sep = ",")
@@ -21,6 +22,7 @@ differences <- read.csv('1-differences.csv', header = TRUE, skip = 0, sep = ",")
 
 #Checking import----
 head(observed)
+head(soiltemp)
 head(modeldefault)
 head(green)
 head(evergreen)
@@ -28,12 +30,14 @@ head(differences)
 
 #Changing factor to date class----
 observed$date_time <- as.Date(observed$date_time, format = "%Y-%m-%d")
+soiltemp$date_time <- as.Date(observed$date_time, format = "%Y-%m-%d")
 modeldefault$ts_hour <- as.Date(modeldefault$ts_hour, format = "%Y-%m-%d")
 green$ts_hour <- as.Date(green$ts_hour, format = "%Y-%m-%d")
 evergreen$ts_hour <- as.Date(evergreen$ts_hour, format = "%Y-%m-%d")
 differences$ts_hour <- as.Date(differences$ts_hour, format = "%Y-%m-%d")
 
 class(observed$date_time)
+class(soiltemp$date_time)
 class(modeldefault$ts_hour)
 class(green$ts_hour)
 class(evergreen$ts_hour)
@@ -104,6 +108,20 @@ ggplot() +
                       labels=c("Observed","Default", "Green", "Evergreen"))+ #adding legend labels
   ylab("Air Temperature "*" in"~degree*C)+
   xlab("Date (in 2015)")
+
+#All soil (observed) temperature----
+ggplot() +
+  geom_line(data = soiltemp, aes(x = date_time, y = soil1_moss, colour = "red")) +
+  geom_line(data = modeldefault, aes(x = ts_hour, y = tslb.1., colour = "blue")) +
+  geom_line(data = soiltemp, aes(x = date_time, y = soil1_5cm, colour = "green")) +
+  geom_line(data = modeldefault, aes(x = ts_hour, y = tsk, colour = "black")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#6495ED", "#EE2C2C", "#66CD00", "#006400"))+ #custom colours
+  scale_colour_manual(values=c("#6495ED", "#EE2C2C", "#66CD00", "#006400"),
+                      labels=c("Observed","Modelled", "5_cm", "skin_temp"))+ #adding legend labels
+  ylab("Soil Temperature "*" in"~degree*C)+
+  xlab("Date (in 2015)")
+
 
 #Soil surface temp----
 ggplot() +
