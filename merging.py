@@ -22,6 +22,7 @@ inpath2 = ''
 inpath3 = ''
 inpath4 = ''
 inpath5 = ''
+inpath6 = ''
 
 ####################
 infilename1 = inpath+'tooldefault.d03.TS'
@@ -54,6 +55,13 @@ df5 = pd.read_csv(infilename5, skiprows=1, sep = ',', header = None,
                  names = ["date_time", "soil1_moss", "soil1_5cm", "soil1_10cm", "soil1_20cm",
                  "soil1_50cm", "soil1_100cm","soil1_150cm"])
 
+infilename6 = inpath6+'toolreal.d03.TS'
+df6 = pd.read_csv(infilename6,delim_whitespace=1,skiprows=1, header = None,
+                 names = ["id", "ts_hour", "id_tsloc", "ix", "iy", "t", "q",
+                          "u", "v", "psfc", "glw", "gsw", "hfx", "lh",
+                          "grdflx", "tsk", "tslb(1)", "rainc",
+                          "rainnc", "clw"])
+
 #df2 = df2.loc['2015-04-21':'2015-05-19']
 
 # Add the decimal hour data to the base datetime
@@ -63,6 +71,7 @@ df2 = df2.set_index(pd.DatetimeIndex(df2['date_time']))
 df3['ts_hour'] = pd.to_datetime(dt.datetime(2015,4,21)+pd.to_timedelta(df3['ts_hour'], unit='h'))
 df4['ts_hour'] = pd.to_datetime(dt.datetime(2015,4,21)+pd.to_timedelta(df4['ts_hour'], unit='h'))
 df5 = df5.set_index(pd.DatetimeIndex(df5['date_time']))
+df6['ts_hour'] = pd.to_datetime(dt.datetime(2015,4,21)+pd.to_timedelta(df6['ts_hour'], unit='h'))
 
 
 #df2['date'] = pd.to_datetime(dt.datetime(2015,4,21)+pd.to_timedelta(df2['date'], unit='h'))
@@ -79,6 +88,10 @@ df3['tsk']= df3['tsk']-273.16
 df4['t']= df4['t']-273.16
 df4['tslb(1)']= df4['tslb(1)']-273.16
 df4['tsk']= df4['tsk']-273.16
+
+df6['t']= df6['t']-273.16
+df6['tslb(1)']= df6['tslb(1)']-273.16
+df6['tsk']= df6['tsk']-273.16
 
 #df5['soil1_moss']= df5['soil1_moss']-273.16
 #df5['soil1_5cm']= df5['soil1_5cm']-273.16
@@ -99,6 +112,10 @@ endTime=pd.to_datetime(df3.index[-1])
 df4 = df4.set_index(['ts_hour'])
 startTime=pd.to_datetime(df4.index[0])   # returns a TimeStamp
 endTime=pd.to_datetime(df4.index[-1])
+
+df6 = df6.set_index(['ts_hour'])
+startTime=pd.to_datetime(df4.index[0])   # returns a TimeStamp
+endTime=pd.to_datetime(df4.index[-1])
 #df2 = df2.set_index(['date_time'])
 #startTime2=pd.to_datetime(df2.index[0])   # returns a TimeStamp
 #endTime2=pd.to_datetime(df2.index[-1])
@@ -109,13 +126,16 @@ df2=df2.resample('1D').mean()
 df3=df3.resample('1D').mean()
 df4=df4.resample('1D').mean()
 df5=df5.resample('1D').mean()
+df6=df6.resample('1D').mean()
 
 
-df1.to_csv('default_hour.csv')
-df2.to_csv('observed_hour.csv')
-df3.to_csv('green_hour.csv')
-df4.to_csv('evergreen_hour.csv')
-df5.to_csv('default_3hour.csv')
+df1.to_csv('default_daily.csv')
+df2.to_csv('observed_daily.csv')
+df3.to_csv('green_daily.csv')
+df4.to_csv('evergreen_daily.csv')
+df5.to_csv('default_3daily.csv')
+df6.to_csv('realistic_daily.csv')
+
 #frames = [df1, df2]
 #results = pd.concat(frames)
 #print results

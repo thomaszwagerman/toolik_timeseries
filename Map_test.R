@@ -30,7 +30,7 @@ bbox <- c(min(-151.68),
 map_toolik <- get_map(location = bbox, source = "google", maptype = "satellite")
 ggmap(map_toolik)
 
-map_toolik <- borders("world", fill = 'grey90', colour = 'black' )
+ map_toolik <- borders("world", fill = 'grey90', colour = 'black' )
 ggplot() +
   map_toolik +  # Add world map
   #geom_point(data = ,  # Add and plot species data
