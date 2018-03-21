@@ -399,14 +399,134 @@ names(observed)
 names(modeldefault)
 
 #Williamson et al. vs Green----
+#Williamson et al. vs Green----
 #Air Temperature----
 ggplot() +
   geom_line(data = green, aes(x = ts_hour, y = t, colour = "green")) +
   geom_line(data = real, aes(x = ts_hour, y = t, colour = "orange")) +
-  scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_toolik()+
   scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
   scale_colour_manual(values=c("#66CD00", "#FF7F00"),
                       labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
   ylab("Air Temperature "*" in"~degree*C)+
   xlab("Date (in 2015)")
+
+#Soil surface temperature----
+ggplot() +
+  geom_line(data = green, aes(x = ts_hour, y = tslb.1., colour = "green")) +
+  geom_line(data = real, aes(x = ts_hour, y = tslb.1., colour = "orange")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
+                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
+  ylab("Soil Surface Temperature "*" in"~degree*C)+
+  xlab("Date (in 2015)")
+#Soil heat flux temperature----
+ggplot() +
+  geom_line(data = green, aes(x = ts_hour, y = grdflx, colour = "green")) +
+  geom_line(data = real, aes(x = ts_hour, y = grdflx, colour = "orange")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
+                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
+  ylab("Soil Heat Flux in W/M2")+
+  xlab("Date (in 2015)")
+#Surface sensible heat flux----
+ggplot() +
+  geom_line(data = green, aes(x = ts_hour, y = hfx, colour = "green")) +
+  geom_line(data = real, aes(x = ts_hour, y = hfx, colour = "orange")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
+                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
+  ylab("Surface Sensible heat flux in W/M2")+
+  xlab("Date (in 2015)")
+#Surface latent heat flux----
+ggplot() +
+  geom_line(data = green, aes(x = ts_hour, y = lh, colour = "green")) +
+  geom_line(data = real, aes(x = ts_hour, y = lh, colour = "orange")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
+                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
+  ylab("Surface latent heat flux in W/M2")+
+  xlab("Date (in 2015)")
+#Downward longwave radiation----
+ggplot() +
+  geom_line(data = green, aes(x = ts_hour, y = glw, colour = "green")) +
+  geom_line(data = real, aes(x = ts_hour, y = glw, colour = "orange")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
+                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
+  ylab("Downward Longwave Radiation in W/m2")+
+  xlab("Date (in 2015)")
+#Net Shortwave Radiation Flux----
+ggplot() +
+  geom_line(data = green, aes(x = ts_hour, y = gsw, colour = "green")) +
+  geom_line(data = real, aes(x = ts_hour, y = gsw, colour = "orange")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
+                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
+  ylab("Net Shortwave Radiation Flux in W/M2")+
+  xlab("Date (in 2015)")
+#Skin temperature----
+ggplot() +
+  geom_line(data = green, aes(x = ts_hour, y = tsk, colour = "green")) +
+  geom_line(data = real, aes(x = ts_hour, y = tsk, colour = "orange")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
+                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
+  ylab("Skin  Temperature "*" in"~degree*C)+
+  xlab("Date (in 2015)")
+#Rainfall from cumulus scheme----
+ggplot() +
+  geom_line(data = green, aes(x = ts_hour, y = rainc, colour = "green")) +
+  geom_line(data = real, aes(x = ts_hour, y = rainc, colour = "orange")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
+                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
+  ylab("Rainfall from cumulus scheme in mm")+
+  xlab("Date (in 2015)")
+#Rainfall from explicit scheme----
+ggplot() +
+  geom_line(data = green, aes(x = ts_hour, y = rainnc, colour = "green")) +
+  geom_line(data = real, aes(x = ts_hour, y = rainnc, colour = "orange")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
+                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
+  ylab("Rainfall from explicit scheme")+
+  xlab("Date (in 2015)")
+
+
+#Multiple variables on same plot----
+#Temperature based----
+ggplot() +
+  geom_line(data = modeldefault, aes(x = ts_hour, y = t, colour = "green")) +
+  geom_line(data = modeldefault, aes(x = ts_hour, y = tsk, colour = "blue")) +
+  geom_line(data = modeldefault, aes(x = ts_hour, y = tslb.1., colour = "orange")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#66CD00", "#6495ED", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#6495ED", "#FF7F00"),
+                      labels=c("Air Temperature","Skin Temperature","Soil Surface Temperature"))+ #adding legend labels
+  ylab("Temperature "*" in"~degree*C)+
+  xlab("Date (in 2015)")
+#Radiation based----
+ggplot() +
+  geom_line(data = modeldefault, aes(x = ts_hour, y = grdflx, colour = "green")) +
+  geom_line(data = modeldefault, aes(x = ts_hour, y = hfx, colour = "blue")) +
+  geom_line(data = modeldefault, aes(x = ts_hour, y = lh, colour = "orange")) +
+  #geom_line(data = modeldefault, aes(x = ts_hour, y = glw, colour = "red")) +
+  #geom_line(data = modeldefault, aes(x = ts_hour, y = gsw, colour = "darkgreen")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#66CD00", "#6495ED", "#FF7F00", "#EE2C2C", "#006400"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#6495ED", "#FF7F00", "#EE2C2C", "#006400"),
+                      labels=c("Soil Heat Flux","Surface Sensible Heat Flux","Surface Latent Heat flux",
+                               "Downward Longwave Radiation", "Net Shortwave Radiation Flux"))+ #adding legend labels
+  ylab("Radiation in W/M2")+
+  xlab("Date (in 2015)")
+
