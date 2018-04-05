@@ -101,6 +101,18 @@ ggplot() +
   ylab("Air Temperature "*"in"~degree*C)+
   xlab("Date (in 2015)")
 
+#Without Williamson----
+ggplot() +
+  geom_point(data = observed, aes(x = date_time, y = air_temp_3m, colour = "blue")) +
+  geom_line(data = modeldefault, aes(x = ts_hour, y = t, colour = "red")) +
+  #geom_line(data = real, aes(x = ts_hour, y = t, colour = "orange")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("#6495ED", "#66CD00"))+ #custom colours
+  scale_colour_manual(values=c("#6495ED", "#66CD00"),
+                      labels=c("Observed","Modelled"))+ #adding legend labels
+  ylab("Air Temperature "*"in"~degree*C)+
+  xlab("Date (in 2015)")
+
 #All air temperature----
 ggplot() +
   geom_line(data = observed, aes(x = date_time, y = air_temp_3m, colour = "blue")) +
