@@ -1,3 +1,6 @@
+#Converting Time of Observed data to match WRFout time 
+#Thomas Zwagerman
+#06/02/2018
 
 #timeseries package
 library(tidyr)

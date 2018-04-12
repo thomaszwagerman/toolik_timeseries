@@ -1,0 +1,91 @@
+#Processing ncl output method   ###
+#Thomas Zwagerman               ###
+#11/04/2018                     ###
+###################################
+#In Terminal, Ubuntu 16.04
+#Package required: ImageMagick 7.0.7-28, https://www.imagemagick.org/script/download.php
+----
+
+#Sorting and filtering timestamps
+----
+#Each model run + variable were given an appropriate filename
+#For example, default snow is
+defsnow*.png
+#with * being the ncl timestamp
+
+#timestamps selected were:
+#000, 168, 456, 348, 456, 552, 624, 672 for t2, snow and albedo
+#corresponding with 21/04, 28/04, 07/05, 10/05, 14/05, 17/05, 19/05 at 12 noon.
+#for all other variables timestamps 552, 624, 672 were used.
+
+#A common folder was created for selected timestamp files
+mkdir ~/toolik_timeseries/cropped
+#selected timestamp files were put into the same folder
+cd ~/toolik_timeseries/cropped
+scp ~/Desktop/toolik_timeseries/ncl/default/*/000.png .
+#repeated for each model run, variable and timestamp
+----
+
+#Cropping
+----
+#First crop selected output to the same size
+mogrify -crop 392x694+314+84 *.png
+
+#Enhance image quality after cropping
+convert -enhance *.png *.png
+----
+
+#Adding date stamp
+----
+#Make directory for each timestamp
+#For example:
+mkdir april21
+
+#Move files with same timestamp to appropriate directory
+#cd to directory, ie:
+cd ~/toolik_timeseries/cropped/april21
+#then
+scp ~/toolik_timeseries/cropped/*png .
+#where * is timestamp, repeat for each timestamp directory
+
+#Within each directory, add a title corresponding with the appropriate timestamp
+mogrify -gravity North -fill Black -splice 0x30 -background White -pointsize 30 -annotate +0+90 "May 19th" *.png
+#repeat for each timestamp directory
+
+#Create new directory to put titled files back into a common folder, for example:
+mkdir titles
+#Then copy files back into common folder
+cd ~/toolik_timeseries/cropped/titles
+scp ~/toolik_timeseries/cropped/april21/*png .
+#repeat for each *timestamp folder
+----
+
+#Arranging into panels
+----
+#To arrange all timestamps for t2, snow and albedo, within a panel:
+montage -mode concatenate -scale 300x300 -title "Air Temperature" -tile 4x3 defsnow*.png defsnow.jpg
+#For t2, snow and albedo, show all default timestamps
+
+#To display model run differences between t2, snow, albedo, tsk, sst, grdlfx, hfx, lh, shortwave and longwave
+#Show default, difference for green, evergreen, real with default at 552, 624 and 672 (May 14/17/19)
+
+#First need to label all model runs
+mogrify -gravity North -fill Black -splice 0x30 -background White -pointsize 30 -annotate +0+90 "Green" gr*.png
+#Repeat for all model runs, ie "Green" gr*.png, etc
+
+#First arrange all model runs by timestamp, for example for sst:
+#may14 timestamp will have the title
+montage -mode concatenate -scale 300x300 -title "Shortwave Radiation Differences" -tile 4x1 *shortwave552t.png may14shortwave.jpg
+#May 17/19 without a title
+montage -mode concatenate -scale 300x300 -tile 4x1 *sst624t.png may17sst.jpg
+montage -mode concatenate -scale 300x300 -tile 4x1 *sst672t.png may19sst.jpg
+
+#Putting all panels together into one panel:
+montage -mode concatenate -scale 600x600 -tile 1x4  may14shortwave.jpg may17shortwave.jpg may19shortwave.jpg allshortwave.jpg
+#Does not need a title because it is included in may14sst.jpg
+#Repeat for all variables
+
+#Then move into seperate folder to back up:
+mkdir Panels
+mv all*.jpg Panels
+----

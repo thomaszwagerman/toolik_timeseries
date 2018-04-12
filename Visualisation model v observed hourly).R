@@ -1,4 +1,4 @@
-#Merging observed and default data
+#Visualisation Model v Observed Hourly
 #Thomas Zwagerman
 #Sat 10th of March
 ####
@@ -116,16 +116,16 @@ ggplot()+
 
 #All air temperature----
 air_temp <- (ggplot() +
-  #geom_line(data = observed, aes(x = date_time, y = air_temp_3m, colour = "blue")) +
+  geom_point(data = observed, aes(x = date_time, y = air_temp_3m, colour = "blue")) +
   geom_line(data = modeldefault, aes(x = ts_hour, y = t, colour = "red")) +
   geom_line(data = green, aes(x = ts_hour, y = t, colour = "green")) +
   geom_line(data = evergreen, aes(x = ts_hour, y = t, colour = "darkgreen")) +
-  #geom_line(data = real, aes(x = ts_hour, y = t, colour = "orange")) +
+  geom_line(data = real, aes(x = ts_hour, y = t, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_toolik()+
-  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"),
-                      labels=c("Default", "Green", "Evergreen", "Real"))+ #adding legend labels
+  scale_fill_manual(values = c("blue", "#EE2C2C", "#66CD00", "#006400", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("blue" ,"#EE2C2C", "#66CD00", "#006400", "#FF7F00"),
+                      labels=c("Observed", "Default", "Green", "Evergreen", "Real"))+ #adding legend labels
   ylab("Air Temperature "*" in"~degree*C)+
   xlab("Date (in 2015)"))
 
@@ -149,12 +149,12 @@ surface_temp <- (ggplot() +
   geom_line(data = modeldefault, aes(x = ts_hour, y = tslb.1., colour = "blue")) +
   geom_line(data = green, aes(x = ts_hour, y = tslb.1., colour = "green")) +
   geom_line(data = evergreen, aes(x = ts_hour, y = tslb.1., colour = "darkgreen")) +
-  #geom_line(data = real, aes(x = ts_hour, y = tslb.1., colour = "orange")) +
+  geom_line(data = real, aes(x = ts_hour, y = tslb.1., colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_toolik()+
-  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400"),
-                      labels=c("Default", "Green", "Evergreen"))+ #adding legend labels
+  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"),
+                      labels=c("Default", "Green", "Evergreen", "Real"))+ #adding legend labels
   ylab("Soil Surface Temperature "*" in"~degree*C)+
   xlab("Date (in 2015)"))
 
@@ -164,11 +164,12 @@ surface_flux <- (ggplot() +
   geom_line(data = modeldefault, aes(x = ts_hour, y = grdflx, colour = "blue")) +
   geom_line(data = green, aes(x = ts_hour, y = grdflx, colour = "green")) +
   geom_line(data = evergreen, aes(x = ts_hour, y = grdflx, colour = "darkgreen")) +
+  geom_line(data = real, aes(x = ts_hour, y = grdflx, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
-  theme_toolik()+
-  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400"),
-                      labels=c("Default", "Green", "Evergreen"))+ #adding legend labels
+  theme_difference()+
+  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"),
+                      labels=c("Default", "Green", "Evergreen", "Real"))+ #adding legend labels
   ylab(bquote('Radiation in' ~W/M^-2))+
   xlab("Date (in 2015)"))
 surface_flux
@@ -178,11 +179,12 @@ sens_heat <- (ggplot() +
   geom_line(data = modeldefault, aes(x = ts_hour, y = hfx, colour = "blue")) +
   geom_line(data = green, aes(x = ts_hour, y = hfx, colour = "green")) +
   geom_line(data = evergreen, aes(x = ts_hour, y = hfx, colour = "darkgreen")) +
+  geom_line(data = real, aes(x = ts_hour, y = hfx, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_toolik()+
-  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400"),
-                      labels=c("Default", "Green", "Evergreen"))+ #adding legend labels
+  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"),
+                      labels=c("Default", "Green", "Evergreen", "Real"))+ #adding legend labels
   ylab(bquote('Radiation in' ~W/M^-2))+
   xlab("Date (in 2015)"))
 sens_heat
@@ -192,11 +194,12 @@ lat_heat <- (ggplot() +
   geom_line(data = modeldefault, aes(x = ts_hour, y = lh, colour = "blue")) +
   geom_line(data = green, aes(x = ts_hour, y = lh, colour = "green")) +
   geom_line(data = evergreen, aes(x = ts_hour, y = lh, colour = "darkgreen")) +
+  geom_line(data = real, aes(x = ts_hour, y = lh, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_toolik()+
-  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400"),
-                      labels=c("Default", "Green", "Evergreen"))+ #adding legend labels
+  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"),
+                      labels=c("Default", "Green", "Evergreen", "Real"))+ #adding legend labels
   ylab(bquote('Radiation in' ~W/M^-2))+
   xlab("Date (in 2015)"))
 lat_heat
@@ -205,37 +208,43 @@ long_rad <- (ggplot() +
   geom_line(data = modeldefault, aes(x = ts_hour, y = glw, colour = "blue")) +
   geom_line(data = green, aes(x = ts_hour, y = glw, colour = "green")) +
   geom_line(data = evergreen, aes(x = ts_hour, y = glw, colour = "darkgreen")) +
+  geom_line(data = real, aes(x = ts_hour, y = glw, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_toolik()+
-  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400"),
-                      labels=c("Default", "Green", "Evergreen"))+ #adding legend labels
+  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"),
+                      labels=c("Default", "Green", "Evergreen", "Real"))+ #adding legend labels
   ylab('Radiation in' ~W/M^-2)+
   xlab("Date (in 2015)"))
+long_rad
 #Net Shortwave radiation flux at the ground----
 short_rad <- (ggplot() +
   geom_line(data = modeldefault, aes(x = ts_hour, y = gsw, colour = "blue")) +
   geom_line(data = green, aes(x = ts_hour, y = gsw, colour = "green")) +
   geom_line(data = evergreen, aes(x = ts_hour, y = gsw, colour = "darkgreen")) +
+  geom_line(data = real, aes(x = ts_hour, y = gsw, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_toolik()+
-  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400"),
-                      labels=c("Default", "Green", "Evergreen"))+ #adding legend labels
+  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"),
+                      labels=c("Default", "Green", "Evergreen", "Real"))+ #adding legend labels
   ylab('Radiation in' ~W/M^-2)+
   xlab("Date (in 2015)"))
+short_rad
 #Skin temperature----
 skin_temp <- (ggplot() +
   geom_line(data = modeldefault, aes(x = ts_hour, y = tsk, colour = "blue")) +
   geom_line(data = green, aes(x = ts_hour, y = tsk, colour = "green")) +
   geom_line(data = evergreen, aes(x = ts_hour, y = tsk, colour = "darkgreen")) +
+  geom_line(data = real, aes(x = ts_hour, y = grdflx, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
-  theme_toolik()+
-  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400"),
-                      labels=c("Default", "Green", "Evergreen"))+ #adding legend labels
+  theme_difference()+
+  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"),
+                      labels=c("Default", "Green", "Evergreen", "Real"))+ #adding legend labels
   ylab("Skin Temperature"*"in"~degree*C)+
   xlab("Date (in 2015)"))
+skin_temp
 #Rainfall from cumulus scheme----
 ggplot() +
   geom_line(data = modeldefault, aes(x = ts_hour, y = rainc, colour = "blue")) +
@@ -266,39 +275,46 @@ ggplot() +
 air_temp_diff <- (ggplot() +
   geom_line(data = differences, aes(x = ts_hour, y = diff_gr_t, colour = "blue")) +
   geom_line(data = differences, aes(x = ts_hour, y = diff_evgr_t, colour = "red")) +
-  #geom_line(data = differences, aes(x = ts_hour, y = diff_real_t, colour = "orange")) +
+  geom_line(data = differences, aes(x = ts_hour, y = diff_real_t, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_difference()+
-  scale_fill_manual(values = c("#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#006400"),
+  scale_fill_manual(values = c("#66CD00", "#006400", "#F77F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#006400", "#F77F00"),
                       labels=c("Difference between Green and Default", 
-                               "Difference between Evergreen and Default"))+ #adding legend labels
+                               "Difference between Evergreen and Default",
+                               "Difference between Real and Default"))+ #adding legend labels
   ylab("Air Temperature "*"in"~degree*C)+
   xlab("Date (in 2015)"))
+air_temp_diff
 
 #Differences from default in soil surface temperature----
 surface_temp_diff <- (ggplot() +
   geom_line(data = differences, aes(x = ts_hour, y = diff_gr_tslb.1., colour = "blue")) +
   geom_line(data = differences, aes(x = ts_hour, y = diff_evgr_tslb.1., colour = "red")) +
+  geom_line(data = differences, aes(x = ts_hour, y = diff_real_tslb.1., colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_difference()+
-  scale_fill_manual(values = c("#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#006400"),
+  scale_fill_manual(values = c("#66CD00", "#006400", "#F77F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#006400", "#F77F00"),
                       labels=c("Difference between Green and Default", 
-                               "Difference between Evergreen and Default"))+ #adding legend labels
+                               "Difference between Evergreen and Default",
+                               "Difference between Real and Default"))+ #adding legend labels
   ylab("Soil Surface Temperature "*"in"~degree*C)+
   xlab("Date (in 2015)"))
 
+surface_temp_diff
 #Difference from default in soil heat flux temp----
 surface_flux_diff <- (ggplot() +
   geom_line(data = differences, aes(x = ts_hour, y = diff_gr_grdflx, colour = "blue")) +
   geom_line(data = differences, aes(x = ts_hour, y = diff_evgr_grdflx, colour = "red")) +
+  geom_line(data = differences, aes(x = ts_hour, y = diff_real_grdflx, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_difference()+
-  scale_fill_manual(values = c("#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#006400"),
+  scale_fill_manual(values = c("#66CD00", "#006400", "#F77F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#006400", "#F77F00"),
                       labels=c("Difference between Green and Default", 
-                               "Difference between Evergreen and Default"))+ #adding legend labels
+                               "Difference between Evergreen and Default",
+                               "Difference between Real and Default"))+ #adding legend labels
   ylab(bquote('Radiation in' ~W/M^-2))+
   xlab("Date (in 2015)"))
 surface_flux_diff
@@ -307,12 +323,14 @@ surface_flux_diff
 sens_heat_diff <- (ggplot() +
   geom_line(data = differences, aes(x = ts_hour, y = diff_gr_hfx, colour = "blue")) +
   geom_line(data = differences, aes(x = ts_hour, y = diff_evgr_hfx, colour = "red")) +
+  geom_line(data = differences, aes(x = ts_hour, y = diff_real_hfx, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_difference()+
-  scale_fill_manual(values = c("#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#006400"),
+  scale_fill_manual(values = c("#66CD00", "#006400", "#F77F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#006400", "#F77F00"),
                       labels=c("Difference between Green and Default", 
-                               "Difference between Evergreen and Default"))+ #adding legend labels
+                               "Difference between Evergreen and Default",
+                               "Difference between Real and Default"))+ #adding legend labels
   ylab(bquote('Radiation in' ~W/M^-2))+
   xlab("Date (in 2015)"))
 sens_heat_diff
@@ -320,12 +338,14 @@ sens_heat_diff
 lat_heat_diff <- (ggplot() +
   geom_line(data = differences, aes(x = ts_hour, y = diff_gr_lh, colour = "blue")) +
   geom_line(data = differences, aes(x = ts_hour, y = diff_evgr_lh, colour = "red")) +
+  geom_line(data = differences, aes(x = ts_hour, y = diff_real_lh, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_difference()+
-  scale_fill_manual(values = c("#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#006400"),
+  scale_fill_manual(values = c("#66CD00", "#006400", "#F77F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#006400", "#F77F00"),
                       labels=c("Difference between Green and Default", 
-                               "Difference between Evergreen and Default"))+ #adding legend labels
+                               "Difference between Evergreen and Default",
+                               "Difference between Real and Default"))+ #adding legend labels
   ylab(bquote('Radiation in' ~W/M^-2))+
   xlab("Date (in 2015)"))
 lat_heat_diff
@@ -333,38 +353,47 @@ lat_heat_diff
 long_rad_diff <- (ggplot() +
   geom_line(data = differences, aes(x = ts_hour, y = diff_gr_glw, colour = "blue")) +
   geom_line(data = differences, aes(x = ts_hour, y = diff_evgr_glw, colour = "red")) +
+  geom_line(data = differences, aes(x = ts_hour, y = diff_real_glw, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_difference()+
-  scale_fill_manual(values = c("#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#006400"),
+  scale_fill_manual(values = c("#66CD00", "#006400", "#F77F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#006400", "#F77F00"),
                       labels=c("As above", 
+                               "As above",
                                "As above"))+ #adding legend labels
   ylab('Radiation in' ~W/M^-2)+
   xlab("Date (in 2015)"))
+long_rad_diff
 #Differences from default in net shortwave radiation flux at the ground----
 short_rad_diff <- (ggplot() +
   geom_line(data = differences, aes(x = ts_hour, y = diff_gr_gsw, colour = "blue")) +
   geom_line(data = differences, aes(x = ts_hour, y = diff_evgr_gsw, colour = "red")) +
+  geom_line(data = differences, aes(x = ts_hour, y = diff_real_gsw, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_difference()+
-  scale_fill_manual(values = c("#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#006400"),
+  scale_fill_manual(values = c("#66CD00", "#006400", "#F77F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#006400", "#F77F00"),
                       labels=c("Difference between Green and Default", 
-                               "Difference between Evergreen and Default"))+ #adding legend labels
+                               "Difference between Evergreen and Default",
+                               "Difference between Real and Default"))+ #adding legend labels
   ylab('Radiation in' ~W/M^-2)+
   xlab("Date (in 2015)"))
+short_rad_diff
 #Differences from default in skin temperature----
 skin_temp_diff <- (ggplot() +
   geom_line(data = differences, aes(x = ts_hour, y = diff_gr_tsk, colour = "blue")) +
   geom_line(data = differences, aes(x = ts_hour, y = diff_evgr_tsk, colour = "red")) +
+  geom_line(data = differences, aes(x = ts_hour, y = diff_real_tsk, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_difference()+
-  scale_fill_manual(values = c("#66CD00", "#006400"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#006400"),
+  scale_fill_manual(values = c("#66CD00", "#006400", "#F77F00"))+ #custom colours
+  scale_colour_manual(values=c("#66CD00", "#006400", "#F77F00"),
                       labels=c("Difference between Green and Default", 
-                               "Difference between Evergreen and Default"))+ #adding legend labels
+                               "Difference between Evergreen and Default",
+                               "Difference between Real and Default"))+ #adding legend labels
   ylab("Skin Temperature "*"in"~degree*C)+
   xlab("Date (in 2015)"))
+skin_temp_diff
 #Differences from default in rainfall from cumulus scheme----
 ggplot() +
   geom_line(data = differences, aes(x = ts_hour, y = diff_gr_rainc, colour = "blue")) +
@@ -416,121 +445,6 @@ mae(error)
 names(observed)
 names(modeldefault)
 
-#Williamson et al. vs Green----
-#Williamson et al. vs Green----
-#Air Temperature----
-ggplot() +
-      geom_point(data = observed, aes(x = date_time, y = air_temp_3m, colour = "blue")) +
-      geom_line(data = modeldefault, aes(x = ts_hour, y = t, colour = "red")) +
-      geom_line(data = green, aes(x = ts_hour, y = t, colour = "green")) +
-      geom_line(data = real, aes(x = ts_hour, y = t, colour = "orange")) +
-               scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
-               theme_toolik()+
-               scale_fill_manual(values = c("#6495ED", "#EE2C2C", "#66CD00", "#FF7F00"))+ #custom colours
-               scale_colour_manual(values=c("#6495ED", "#EE2C2C", "#66CD00", "#FF7F00"),
-                                   labels=c("Observed","Default", "Green", "Real"))+ #adding legend labels
-               ylab("Air Temperature "*" in"~degree*C)+
-               xlab("Date (in 2015)")
-ggplot() +
-  geom_line(data = green, aes(x = ts_hour, y = t, colour = "green")) +
-  geom_line(data = real, aes(x = ts_hour, y = t, colour = "orange")) +
-  theme_toolik()+
-  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
-                      labels=c("Green","Real"))+ #adding legend labels
-  ylab("Air Temperature "*" in"~degree*C)+
-  xlab("Date (in 2015)")
-
-#Soil surface temperature----
-ggplot() +
-  geom_line(data = green, aes(x = ts_hour, y = tslb.1., colour = "green")) +
-  geom_line(data = real, aes(x = ts_hour, y = tslb.1., colour = "orange")) +
-  theme_toolik()+
-  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
-                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
-  ylab("Soil Surface Temperature "*" in"~degree*C)+
-  xlab("Date (in 2015)")
-#Soil heat flux temperature----
-ggplot() +
-  geom_line(data = green, aes(x = ts_hour, y = grdflx, colour = "green")) +
-  geom_line(data = real, aes(x = ts_hour, y = grdflx, colour = "orange")) +
-  theme_toolik()+
-  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
-                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
-  ylab("Soil Heat Flux in W/M2")+
-  xlab("Date (in 2015)")
-#Surface sensible heat flux----
-ggplot() +
-  geom_line(data = green, aes(x = ts_hour, y = hfx, colour = "green")) +
-  geom_line(data = real, aes(x = ts_hour, y = hfx, colour = "orange")) +
-  theme_toolik()+
-  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
-                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
-  ylab("Surface Sensible heat flux in W/M2")+
-  xlab("Date (in 2015)")
-#Surface latent heat flux----
-ggplot() +
-  geom_line(data = green, aes(x = ts_hour, y = lh, colour = "green")) +
-  geom_line(data = real, aes(x = ts_hour, y = lh, colour = "orange")) +
-  theme_toolik()+
-  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
-                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
-  ylab("Surface latent heat flux in W/M2")+
-  xlab("Date (in 2015)")
-#Downward longwave radiation----
-ggplot() +
-  geom_line(data = green, aes(x = ts_hour, y = glw, colour = "green")) +
-  geom_line(data = real, aes(x = ts_hour, y = glw, colour = "orange")) +
-  theme_toolik()+
-  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
-                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
-  ylab("Downward Longwave Radiation in W/m2")+
-  xlab("Date (in 2015)")
-#Net Shortwave Radiation Flux----
-ggplot() +
-  geom_line(data = green, aes(x = ts_hour, y = gsw, colour = "green")) +
-  geom_line(data = real, aes(x = ts_hour, y = gsw, colour = "orange")) +
-  theme_toolik()+
-  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
-                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
-  ylab(bquote('Radiation in' ~W/M^-2))+
-  xlab("Date (in 2015)")
-#Skin temperature----
-ggplot() +
-  geom_line(data = green, aes(x = ts_hour, y = tsk, colour = "green")) +
-  geom_line(data = real, aes(x = ts_hour, y = tsk, colour = "orange")) +
-  theme_toolik()+
-  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
-                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
-  ylab("Skin  Temperature "*" in"~degree*C)+
-  xlab("Date (in 2015)")
-#Rainfall from cumulus scheme----
-ggplot() +
-  geom_line(data = green, aes(x = ts_hour, y = rainc, colour = "green")) +
-  geom_line(data = real, aes(x = ts_hour, y = rainc, colour = "orange")) +
-  theme_toolik()+
-  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
-                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
-  ylab("Rainfall from cumulus scheme in mm")+
-  xlab("Date (in 2015)")
-#Rainfall from explicit scheme----
-ggplot() +
-  geom_line(data = green, aes(x = ts_hour, y = rainnc, colour = "green")) +
-  geom_line(data = real, aes(x = ts_hour, y = rainnc, colour = "orange")) +
-  theme_toolik()+
-  scale_fill_manual(values = c("#66CD00", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#66CD00", "#FF7F00"),
-                      labels=c("Green","Williamson et al. 2016"))+ #adding legend labels
-  ylab("Rainfall from explicit scheme")+
-  xlab("Date (in 2015)")
 
 #Multiple variables on same plot----
 #Temperature based----
@@ -571,14 +485,14 @@ panel <- grid.arrange(air_temp + ggtitle("(a) Air Temperature") +
                       skin_temp_diff + ggtitle("(d) Skin Temperature Differences") +
                         theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")))
 
-panel_surface <- grid.arrange(surface_temp + ggtitle("(a) Surface Temperature") + 
-                                theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")),
-                              surface_temp_diff + ggtitle("(b) Surface Temperature Differences") +
-                                theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")),
-                              surface_flux + ggtitle("(c) Soil Heat Flux") + 
-                                theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")),
-                              surface_flux_diff + ggtitle("(d) Soil Heat Flux Differences") +
-                                theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")))
+panel_surf <-grid.arrange(surface_temp + ggtitle("(e) Surface Temperature") + 
+                        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")),
+                      surface_temp_diff + ggtitle("(f) Surface Temperature Differences") +
+                        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")),
+                      surface_flux + ggtitle("(c) Soil Heat Flux") +
+                        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")),
+                      surface_flux_diff + ggtitle("(d) Soil Heat Flux Differences") +
+                        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")))
 
 panel_senslat <- grid.arrange(sens_heat + ggtitle("(a) Surface Sensible Heat Flux") + 
                                 theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")),
