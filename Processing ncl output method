@@ -75,7 +75,7 @@ mogrify -gravity North -fill Black -splice 0x30 -background White -pointsize 30 
 
 #First arrange all model runs by timestamp, for example for sst:
 #may14 timestamp will have the title
-montage -mode concatenate -scale 300x300 -title "Shortwave Radiation Differences" -tile 4x1 *shortwave552t.png may14shortwave.jpg
+montage -mode concatenate -scale 300x300 -title "PBLH Differences" -tile 4x1 *pblh552t.png may14pblh.jpg
 #May 17/19 without a title
 montage -mode concatenate -scale 300x300 -tile 4x1 *sst624t.png may17sst.jpg
 montage -mode concatenate -scale 300x300 -tile 4x1 *sst672t.png may19sst.jpg
