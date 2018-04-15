@@ -49,7 +49,7 @@ scp ~/toolik_timeseries/cropped/*png .
 #where * is timestamp, repeat for each timestamp directory
 
 #Within each directory, add a title corresponding with the appropriate timestamp
-mogrify -gravity North -fill Black -splice 0x30 -background White -pointsize 30 -annotate +0+90 "May 19th" *.png
+mogrify -gravity North -fill Black -splice 0x30 -background White -pointsize 30 -annotate +0+90 "April 21th" defalb000t.png
 #repeat for each timestamp directory
 
 #Create new directory to put titled files back into a common folder, for example:

@@ -60,9 +60,9 @@ theme_difference <- function(){
           panel.grid.major.y =element_blank(),
           panel.grid.minor.y =element_blank(),
           plot.margin = unit(c(1,1,1,1), units= , "cm")) + #adding 1cm margin
-    theme(legend.text = element_text(size=10, face="italic"), #setting font for a legend
+    theme(legend.text = element_text(size=9, face="italic"), #setting font for a legend
           legend.title = element_blank(), #removing legend title, blank
-          legend.position= c(0.4, 0.2)) #setting position for legend, 0 is bottom left, 1 is top right.  
+          legend.position= c(0.4, 0.9)) #setting position for legend, 0 is bottom left, 1 is top right.  
 }
 
 theme_nolegend <- function(){
@@ -244,7 +244,7 @@ sens_heat_diff <- (ggplot() +
                      geom_line(data = differences, aes(x = ts_hour, y = diff_evgr_hfx, colour = "red")) +
                      geom_line(data = differences, aes(x = ts_hour, y = diff_real_hfx, colour = "orange")) +
                      scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
-                     theme_difference()+
+                     theme_nolegend()+
                      scale_fill_manual(values = c("#66CD00", "#006400", "#F77F00"))+ #custom colours
                      scale_colour_manual(values=c("#66CD00", "#006400", "#F77F00"),
                                          labels=c("Difference between Green and Default", 
@@ -259,7 +259,7 @@ lat_heat_diff <- (ggplot() +
                     geom_line(data = differences, aes(x = ts_hour, y = diff_evgr_lh, colour = "red")) +
                     geom_line(data = differences, aes(x = ts_hour, y = diff_real_lh, colour = "orange")) +
                     scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
-                    theme_nolegend()+
+                    theme_difference()+
                     scale_fill_manual(values = c("#66CD00", "#006400", "#F77F00"))+ #custom colours
                     scale_colour_manual(values=c("#66CD00", "#006400", "#F77F00"),
                                         labels=c("Difference between Green and Default", 
