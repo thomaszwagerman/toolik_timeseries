@@ -116,16 +116,16 @@ ggplot()+
 
 #All air temperature----
 air_temp <- (ggplot() +
-  geom_point(data = observed, aes(x = date_time, y = air_temp_3m, colour = "blue")) +
+  #geom_point(data = observed, aes(x = date_time, y = air_temp_3m, colour = "blue")) +
   geom_line(data = modeldefault, aes(x = ts_hour, y = t, colour = "red")) +
   geom_line(data = green, aes(x = ts_hour, y = t, colour = "green")) +
   geom_line(data = evergreen, aes(x = ts_hour, y = t, colour = "darkgreen")) +
   geom_line(data = real, aes(x = ts_hour, y = t, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
   theme_toolik()+
-  scale_fill_manual(values = c("blue", "#EE2C2C", "#66CD00", "#006400", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("blue" ,"#EE2C2C", "#66CD00", "#006400", "#FF7F00"),
-                      labels=c("Observed", "Default", "Green", "Evergreen", "Real"))+ #adding legend labels
+  scale_fill_manual(values = c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"))+ #custom colours
+  scale_colour_manual(values=c("#EE2C2C", "#66CD00", "#006400", "#FF7F00"),
+                      labels=c("Default", "Green", "Evergreen", "Real"))+ #adding legend labels
   ylab("Air Temperature "*" in"~degree*C)+
   xlab("Date (in 2015)"))
 
@@ -277,7 +277,7 @@ air_temp_diff <- (ggplot() +
   geom_line(data = differences, aes(x = ts_hour, y = diff_evgr_t, colour = "red")) +
   geom_line(data = differences, aes(x = ts_hour, y = diff_real_t, colour = "orange")) +
   scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
-  theme_difference()+
+  theme_nolegend()+
   scale_fill_manual(values = c("#66CD00", "#006400", "#F77F00"))+ #custom colours
   scale_colour_manual(values=c("#66CD00", "#006400", "#F77F00"),
                       labels=c("Difference between Green and Default", 
