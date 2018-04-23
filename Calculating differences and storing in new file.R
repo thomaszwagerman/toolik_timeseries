@@ -6,6 +6,7 @@
 #Thomas Zwagerman
 #Sat 10th of March
 ####
+library(markdown)
 library(tidyr)
 library(dplyr)
 library(ggplot2)

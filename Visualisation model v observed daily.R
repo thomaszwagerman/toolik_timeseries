@@ -88,18 +88,23 @@ theme_difference <- function(){
           legend.title = element_blank(), #removing legend title, blank
           legend.position=c(0.3, 0.2)) #setting position for legend, 0 is bottom left, 1 is top right.  
 }
+names(green)
 
 #First visualisation - Air Temperature, model vs observation----
-ggplot() +
+air_temp_daily <- ggplot() +
   geom_point(data = observed, aes(x = date_time, y = air_temp_3m, colour = "blue")) +
   geom_line(data = modeldefault, aes(x = ts_hour, y = t, colour = "red")) +
   geom_line(data = real, aes(x = ts_hour, y = t, colour = "orange")) +
+  geom_line(data = green, aes(x = ts_hour, y = t, colour = "green")) +
   theme_toolik()+
-  scale_fill_manual(values = c("#6495ED", "#66CD00", "#FF7F00"))+ #custom colours
-  scale_colour_manual(values=c("#6495ED", "#66CD00", "#FF7F00"),
-                      labels=c("Observed","Modelled", "Williamson et al."))+ #adding legend labels
+  scale_fill_manual(values = c("blue" = "#6495ED","red"= "#F00000","orange"= "#FF7F00", "green" = "#66CD00"))+ #custom colours
+  scale_colour_manual(values=c("blue" ="#6495ED","red"= "#F00000","orange"= "#FF7F00", "green" = "#66CD00"),
+                      labels=c("blue" = "Observed","red" = "Default","orange"= "Real","green"="Green"))+ #adding legend labels
   ylab("Air Temperature "*"in"~degree*C)+
   xlab("Date (in 2015)")
+
+ggsave(air_temp_daily, file = "air_temp_daily.png", width = 8, height =6)
+
 
 #Without Williamson----
 ggplot() +
@@ -374,9 +379,9 @@ mae <- function(error)
 }
 
 # Calculate error
-error <- observed$air_temp_3m - modeldefault$t
-errorgreen <- observed$air_temp_3m - green$t
-errorreal <- observed$air_temp_3m - real$t
+error_daily <- observed_daily$air_temp_3m - modeldefault_daily$t
+errorgreen_daily <- observed_daily$air_temp_3m - green_daily$t
+errorreal_daily <- observed_daily$air_temp_3m - real_daily$t
 
 # Example of invocation of functions
 rmse(error)

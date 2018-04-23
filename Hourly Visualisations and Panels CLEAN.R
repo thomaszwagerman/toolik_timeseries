@@ -10,9 +10,9 @@ library(gridExtra)
 library(ggpubr)
 library(colourpicker)
 library(forecast)
-getwd()
 setwd("/home/thomasz/Desktop/toolik_timeseries/toolik_timeseries")
 
+#Readin in csv's----
 observed <- read.csv('observed_hourly.csv', header = TRUE, skip = 0, sep = ",")
 soiltemp <- read.csv('default_3hourly.csv', header = TRUE, skip = 0, sep = ",")
 modeldefault <- read.csv('default_hourly.csv', header = TRUE, skip = 0, sep = ",")
@@ -93,7 +93,6 @@ air_temp <- (ggplot() +
                                    labels=c("Default", "Green", "Evergreen", "Real"))+ #adding legend labels
                ylab("Air Temperature "*" in"~degree*C)+
                xlab("Date (in 2015)"))
-air_temp
 
 #Soil surface temp----
 surface_temp <- (ggplot() +
@@ -208,7 +207,6 @@ air_temp_diff <- (ggplot() +
                     ylab("Air Temperature "*"in"~degree*C)+
                     xlab("Date (in 2015)"))
 
-air_temp_diff
 #Differences from default in soil surface temperature----
 surface_temp_diff <- (ggplot() +
                         geom_line(data = differences, aes(x = ts_hour, y = diff_gr_tslb.1., colour = "a")) +
@@ -314,7 +312,7 @@ skin_temp_diff <- (ggplot() +
                      ylab("Skin Temperature "*"in"~degree*C)+
                      xlab("Date (in 2015)"))
 
-#Panels ----
+#Arranging into Panels ----
 panel <- grid.arrange(air_temp + ggtitle("(a) Air Temperature") + 
                         theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")),
                       air_temp_diff + ggtitle("(b) Air Temperature Differences") +
@@ -351,6 +349,7 @@ panel_shortlong <- grid.arrange(short_rad + ggtitle("(a) Shortwave Radiation") +
                                 long_rad_diff + ggtitle("(d) Longwave Radiation Differences") +
                                   theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), units = "cm")))
 
+#Saving panels----
 ggsave(panel, file = "air_temp_panel.png", width = 10, height =8)
 ggsave(panel_surface, file = "surface_temp_panel.png", width = 10, height = 8)
 ggsave(panel_senslat, file = "senslat_flux_panel.png", width = 10, height = 8)

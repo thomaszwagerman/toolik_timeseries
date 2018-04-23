@@ -91,16 +91,19 @@ theme_difference <- function(){
 }
 
 #First visualisation - Air Temperature, model vs observation----
-ggplot()+
-  geom_point(data= observed, aes(x = date_time, y = air_temp_3m, colour = "blue"))+
-  geom_line(data= modeldefault, aes(x = ts_hour, y = t, colour = "green"))+
-  scale_x_datetime(date_labels = "%D", date_breaks = "3 day")+
-  theme_toolik() +
-  scale_fill_manual(values = c("#6495ED", "#66CD00"))+ #custom colours
-  scale_colour_manual(values=c("#6495ED", "#66CD00"),
-                      labels=c("Observed","Modelled"))+ #adding legend labels
+air_temp_hourly <- ggplot() +
+  geom_point(data = observed, aes(x = date_time, y = air_temp_3m, colour = "blue")) +
+  geom_line(data = modeldefault, aes(x = ts_hour, y = t, colour = "red")) +
+  geom_line(data = real, aes(x = ts_hour, y = t, colour = "orange")) +
+  geom_line(data = green, aes(x = ts_hour, y = t, colour = "green")) +
+  theme_toolik()+
+  scale_fill_manual(values = c("blue" = "#6495ED","red"= "#F00000","orange"= "#FF7F00", "green" = "#66CD00"))+ #custom colours
+  scale_colour_manual(values=c("blue" ="#6495ED","red"= "#F00000","orange"= "#FF7F00", "green" = "#66CD00"),
+                      labels=c("blue" = "Observed","red"= "Default","orange"= "Real","green"= "Green"))+ #adding legend labels
   ylab("Air Temperature "*"in"~degree*C)+
   xlab("Date (in 2015)")
+
+ggsave(air_temp_hourly, file = "air_temp_hourly.png", width = 8, height =6)
 
 ggplot()+
   geom_point(data= observed, aes(x = date_time, y = air_temp_3m, colour = "blue"))+
